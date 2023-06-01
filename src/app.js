@@ -3,10 +3,11 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const userRoutes = require('./interfaces/routes/userRouter');
 const connectDB = require('./infrastructures/database/db');
 const DomainErrorTranslator = require('./commons/exceptions/DomainErrorTranslator');
 const ClientError = require('./commons/exceptions/ClientError');
+const userRoutes = require('./interfaces/routes/userRouter');
+const authenticationRoutes = require('./interfaces/routes/authenticationRouter');
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use(bodyParser.json());
 
 /** ROUTES */
 app.use('/api', userRoutes);
+app.use('/api', authenticationRoutes);
 
 app.use((err, req, res, next) => {
   const translatedError = DomainErrorTranslator.translate(err);
@@ -28,7 +30,6 @@ app.use((err, req, res, next) => {
     });
     return;
   }
-
   res.status(500).json({
     status: 'error',
     message: 'Internal server error',

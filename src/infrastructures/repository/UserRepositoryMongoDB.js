@@ -22,7 +22,9 @@ class UserRepositoryMongoDB extends UserRepository {
   }
 
   async getPasswordByEmail(email) {
-    return await User.findOne({ email }).select('password');
+    const user = await User.findOne({ email });
+
+    return user.password;
   }
 
   async getIdByEmail(email) {

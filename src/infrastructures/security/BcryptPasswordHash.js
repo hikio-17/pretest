@@ -10,7 +10,7 @@ class BcryptPasswordHash extends EncryptedHelper {
 
   async comparePassword(password, hashedPassword) {
     const result = await bcrypt.compare(password, hashedPassword);
-
+    console.log(result);
     if (!result) {
       throw new AuthenticationError('Kredential not valid');
     }

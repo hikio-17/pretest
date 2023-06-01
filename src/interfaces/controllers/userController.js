@@ -5,7 +5,6 @@ const asyncHandler = require('express-async-handler');
 class UserController {
   constructor(container) {
     this._container = container;
-    this.userRegister = this.userRegister.bind(this);
   }
 
   userRegister = asyncHandler(async (req, res) => {

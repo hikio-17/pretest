@@ -10,7 +10,7 @@ describe('a UserRegister entities', () => {
     };
 
     // Action & Assert
-    expect(() => new UserRegister(payload)).toThrowError('REGISTERED_USER.NOT_CONTAIN_NEEDED_PROPERTY');
+    expect(() => new UserRegister(payload)).toThrowError('REGISTER_USER.NOT_CONTAIN_NEEDED_PROPERTY');
   });
 
   it('should throw error when did not meet data type spesification', () => {
@@ -22,7 +22,7 @@ describe('a UserRegister entities', () => {
     };
 
     // Action & Assert
-    expect(() => new UserRegister(payload)).toThrowError('REGISTERED_USER.NOT_MEET_DATA_TYPE_SPECIFICATION');
+    expect(() => new UserRegister(payload)).toThrowError('REGISTER_USER.NOT_MEET_DATA_TYPE_SPECIFICATION');
   });
 
   it('should throw error when username contains more than 30 character', () => {

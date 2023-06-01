@@ -10,15 +10,15 @@ class UserRegister {
 
   _verifyPayload({ username, email, password }) {
     if (username === '' || email === '' || password === '') {
-      throw new Error('REGISTERED_USER.NOT_CONTAIN_NEEDED_PROPERTY');
+      throw new Error('REGISTER_USER.NOT_CONTAIN_NEEDED_PROPERTY');
     }
 
     if (username.length > 30) {
       throw new Error('REGISTER_USER.USERNAME_LIMIT_CHAR');
     }
 
-    if (typeof username !== 'string' || typeof email !== 'string' || typeof password !== 'string' || !this.isValidEmail(email)) {
-      throw new Error('REGISTERED_USER.NOT_MEET_DATA_TYPE_SPECIFICATION');
+    if (typeof username !== 'string' || typeof email !== 'string' || typeof password !== 'string') {
+      throw new Error('REGISTER_USER.NOT_MEET_DATA_TYPE_SPECIFICATION');
     }
   }
 

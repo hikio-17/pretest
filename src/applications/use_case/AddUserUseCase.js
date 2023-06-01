@@ -10,7 +10,7 @@ class AddUserUseCase {
   async execute(useCasePayload) {
     const userRegister = new UserRegister(useCasePayload);
 
-    if (!this._emailValidator(userRegister.email)) {
+    if (!this._emailValidator.validate(userRegister.email)) {
       throw new Error('Invalid email!');
     }
 

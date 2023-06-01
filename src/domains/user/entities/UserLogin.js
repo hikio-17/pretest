@@ -12,7 +12,7 @@ class UserLogin {
       throw new Error('LOGIN_USER.NOT_CONTAIN_NEEDED_PROPERTY');
     }
 
-    if (typeof email !== 'string' || typeof password !== 'string' || typeof username !== 'string') {
+    if (typeof email !== 'string' || typeof password !== 'string') {
       throw new Error('LOGIN_USER.NOT_MEET_DATA_TYPE_SPECIFICATION');
     }
   }

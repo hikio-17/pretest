@@ -1,22 +1,22 @@
 const AuthenticationRepository = require('../../domains/authentications/AuthenticationRepository');
-const Authentiation = require('../database/models/Authentication');
+const Authentication = require('../database/models/Authentication');
 const InvariantError = require('../../commons/exceptions/InvariantError');
 
 class AuthenticationRepositoryMongoDb extends AuthenticationRepository {
   async addToken(token) {
-    await Authentiation.create({ token });
+    await Authentication.create({ token });
   }
 
   async checkAvailabilityToken(token) {
-    const tokenExisting = await Authentiation.findOne({ token });
+    const tokenExisting = await Authentication.findOne({ token });
 
     if (!tokenExisting) {
-      throw new InvariantError('refresh token tidak ditemukan');
+      throw new InvariantError('refresh token tidak ditemukan di database');
     }
   }
 
   async deleteToken(token) {
-    await Authentiation.findOneAndDelete({ token });
+    await Authentication.findOneAndDelete({ token });
   }
 }
 

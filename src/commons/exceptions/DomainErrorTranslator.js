@@ -21,8 +21,10 @@ DomainErrorTranslator._directories = {
   'NEW_THREAD.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('tidak dapat membuat thread baru karena tipe data tidak seusai'),
   'NEW_THREAD.TITLE_LIMIT_CHAR': new InvariantError('tidak dapat membuat thread baru karena karakter title melebihi batas limit'),
   'NEW_COMMENT.NOT_MEET_DATA_TYPE_SPESIFICATION': new InvariantError('comment harus berupa string'),
-  'NEW_REPLY_COMMENT.NOT_MEET_DATA_TYPE_SPESIFICATION': new InvariantError('reply comment harus berupa string'),
   'ADD_LIKE_COMMENT_USE_CASE.NOT_MEET_DATA_TYPE_SPESIFICATION': new InvariantError('add like comment harus berupa string'),
   'REPLIES.NOT_MEET_DATA_TYPE_SPESIFICATION': new InvariantError('reply harus berupa string'),
+  'ADD_TICKET_USE_CASE.CREDENTIAL_ID_NOT_MEET_DATA_TYPE_SPESIFICATION': new InvariantError('id user harus berupa string'),
+  'NEW_TICKET.NOT_COUNTAIN_NEEDED_PROPERTY': new InvariantError('tidak dapat membuat ticket baru karena properti yang dibutuhkan tidak ada'),
+  'NEW_TICKET.PAYLOAD_NOT_MEET_DATA_TYPE_SPESIFICATION': new InvariantError('tidak dapat membuat ticket baru karena tipe data tidak sesuai'),
 };
 module.exports = DomainErrorTranslator;

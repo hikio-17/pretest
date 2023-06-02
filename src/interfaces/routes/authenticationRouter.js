@@ -7,5 +7,7 @@ const AuthenticationController = require('../controllers/AuthenticationControlle
 const authenticationController = new AuthenticationController(container);
 
 router.post('/authentications', authenticationController.userLogin);
+router.put('/authentications', authenticationController.userEditToken);
+router.delete('/authentications', authenticationController.userLogout);
 
 module.exports = router;

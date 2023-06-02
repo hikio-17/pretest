@@ -1,4 +1,5 @@
 /* eslint-disable no-return-await */
+const AuthenticationError = require('../../commons/exceptions/AuthenticationError');
 const InvariantError = require('../../commons/exceptions/InvariantError');
 const UserRepository = require('../../domains/user/UserRepository');
 const User = require('../database/models/User');
@@ -10,7 +11,10 @@ class UserRepositoryMongoDB extends UserRepository {
       email,
       password,
     });
-    return user._id;
+    return {
+      userId: user._id,
+      username: user.username,
+    };
   }
 
   async verifyAvailableEmail(email) {
@@ -23,12 +27,19 @@ class UserRepositoryMongoDB extends UserRepository {
 
   async getPasswordByEmail(email) {
     const user = await User.findOne({ email });
-
+    if (!user) {
+      throw new InvariantError('Email tidak valid!');
+    }
     return user.password;
   }
 
   async getIdByEmail(email) {
-    return await User.findOne({ email }).select('_id');
+    const user = await User.findOne({ email }).select('_id');
+    return user._id;
+  }
+
+  async getUserByEmail(email) {
+    return User.findOne({ email }).select('-password');
   }
 }
 

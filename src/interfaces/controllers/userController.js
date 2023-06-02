@@ -9,12 +9,12 @@ class UserController {
 
   userRegister = asyncHandler(async (req, res) => {
     const addUserUseCase = this._container.resolve('addUserUseCase');
-    const userId = await addUserUseCase.execute(req.body);
-    res.status(200).json({
+    const addedUser = await addUserUseCase.execute(req.body);
+    res.status(201).json({
       status: 'success',
       message: 'User registered successfuly',
       data: {
-        userId,
+        addedUser,
       },
     });
   });

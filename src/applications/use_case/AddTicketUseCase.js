@@ -6,7 +6,6 @@ class AddTicketUseCase {
   }
 
   async execute(useCasePayload, credentialId) {
-    console.log(typeof credentialId);
     this._verifyCredentialId(credentialId);
     const newTicket = new NewTicket(useCasePayload);
 

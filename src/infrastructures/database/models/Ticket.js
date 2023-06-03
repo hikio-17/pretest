@@ -14,6 +14,15 @@ const ticketSchema = new mongoose.Schema({
     enum: ['menunggu tindakan', 'sedang dalam proses', 'sedang direspon', 'telah selesai'],
     default: 'menunggu tindakan',
   },
+  priority: {
+    type: String,
+    enum: ['low', 'medium', 'high', 'critical'],
+    default: 'Low',
+  },
+  priorityIndex: {
+    type: Number,
+    required: true,
+  },
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',

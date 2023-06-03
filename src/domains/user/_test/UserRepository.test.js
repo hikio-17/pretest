@@ -10,5 +10,6 @@ describe('UserRepository Interface', () => {
     await expect(userRepository.verifyAvailableEmail('')).rejects.toThrowError('USER_REPOSITORY.METHOD_NOT_IMPLEMENTED');
     await expect(userRepository.getIdByEmail('')).rejects.toThrowError('USER_REPOSITORY.METHOD_NOT_IMPLEMENTED');
     await expect(userRepository.getPasswordByEmail('')).rejects.toThrowError('USER_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+    await expect(userRepository.getUserByEmail('')).rejects.toThrowError('USER_REPOSITORY.METHOD_NOT_IMPLEMENTED');
   });
 });

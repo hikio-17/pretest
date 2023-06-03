@@ -3,15 +3,27 @@ class TicketRepository {
     throw new Error('TICKET_REPOSITORY.METHOD_NOT_IMPLEMENTED');
   }
 
-  async getTicketById(ticketId, userId) {
+  async findTicketById(ticketId, userId) {
     throw new Error('TICKET_REPOSITORY.METHOD_NOT_IMPLEMENTED');
   }
 
-  async getAllTicket(userId) {
+  async findAllTicket(userAccess, query) {
     throw new Error('TICKET_REPOSITORY.METHOD_NOT_IMPLEMENTED');
   }
 
-  async deleteTicketById(ticketId, userId) {
+  async updateStatusTicket(status, ticketId) {
+    throw new Error('TICKET_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+  }
+
+  async verifyAvailableTicket(ticketId) {
+    throw new Error('TICKET_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+  }
+
+  async verifyAccessTicket(ticketId, userId) {
+    throw new Error('TICKET_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+  }
+
+  async deleteTicketById(ticketId) {
     throw new Error('TICKET_REPOSITORY.METHOD_NOT_IMPLEMENTED');
   }
 }

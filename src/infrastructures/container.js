@@ -15,6 +15,10 @@ const LoginUserUseCase = require('../applications/use_case/LoginUserUseCase');
 const LogoutUserUseCase = require('../applications/use_case/LogoutUserUseCase');
 const RefreshAuthenticationUseCase = require('../applications/use_case/RefreshAuthenticationUseCase');
 const AddTicketUseCase = require('../applications/use_case/AddTicketUseCase');
+const UpdateStatusTicketUseCase = require('../applications/use_case/UpdateStatusTicketUseCase');
+const GetTicketUseCase = require('../applications/use_case/GetTicketUseCase');
+const GetAllTicketUseCase = require('../applications/use_case/GetAllTicketUseCase');
+const DeleteTicketUseCase = require('../applications/use_case/DeleteTicketUseCase');
 
 const container = createContainer();
 
@@ -27,6 +31,10 @@ container.register({
   authenticationRepository: asClass(AuthenticationRepositoryMongoDB),
   ticketRepository: asClass(TicketRepsositoryMongoDB),
 
+  deleteTicketUseCase: asClass(DeleteTicketUseCase),
+  getAllTicketUseCase: asClass(GetAllTicketUseCase),
+  getTicketUseCase: asClass(GetTicketUseCase),
+  updateStatusTicketUseCase: asClass(UpdateStatusTicketUseCase),
   addTicketUseCase: asClass(AddTicketUseCase),
   addUserUseCase: asClass(AddUserUseCase),
   loginUserUseCase: asClass(LoginUserUseCase),

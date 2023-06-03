@@ -10,12 +10,13 @@ const ClientError = require('./commons/exceptions/ClientError');
 const userRoutes = require('./interfaces/routes/userRouter');
 const authenticationRoutes = require('./interfaces/routes/authenticationRouter');
 const ticketRoutes = require('./interfaces/routes/ticketRouter');
+const logger = require('./commons/middlewares/logs/logger');
 
 const app = express();
 require('dotenv').config();
 /** MIDDLEWARE */
 app.use(cors());
-app.use(morgan('dev'));
+app.use(morgan('combined', { stream: logger.stream }));
 app.use(bodyParser.json());
 
 /** ROUTES */
@@ -32,7 +33,6 @@ app.use((err, req, res, next) => {
     });
     return;
   }
-  console.log(err);
   res.status(500).json({
     status: 'error',
     message: 'Internal server error',

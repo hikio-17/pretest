@@ -1,14 +1,16 @@
 /* eslint-disable no-return-await */
-const AuthenticationError = require('../../commons/exceptions/AuthenticationError');
 const InvariantError = require('../../commons/exceptions/InvariantError');
 const UserRepository = require('../../domains/user/UserRepository');
 const User = require('../database/models/User');
 
 class UserRepositoryMongoDB extends UserRepository {
-  async addUser({ username, email, password }) {
+  async addUser({
+    username, email, password, role,
+  }) {
     const user = await User.create({
       username,
       email,
+      role,
       password,
     });
     return {

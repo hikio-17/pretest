@@ -12,7 +12,7 @@ exports.authCheck = async (req, res, next) => {
     const { email } = jwt.verify(token, process.env.ACCESS_TOKEN_KEY);
     const user = await User.findOne({ email });
     req.user = {
-      userId: user._id,
+      userId: user._id.toString(),
       role: user.role,
     };
     next();
@@ -22,13 +22,24 @@ exports.authCheck = async (req, res, next) => {
 };
 
 exports.adminCheck = async (req, res, next) => {
-  const token = req.headers.authorization;
-  const { email } = jwt.verify(token, process.env.ACCESS_TOKEN_KEY);
-  const user = await User.findOne({ email });
+  try {
+    const [type, token] = req.headers.authorization.split(' ');
+    if (type !== 'Bearer') {
+      next(new AuthenticationError('format token tidak valid'));
+    }
+    const { email } = jwt.verify(token, process.env.ACCESS_TOKEN_KEY);
+    const user = await User.findOne({ email });
 
-  if (user.role !== 'admin') {
-    throw new AuthorizationError('Resource hanya bisa diakses oleh admin');
+    if (user.role !== 'admin') {
+      next(new AuthorizationError('Resource hanya bisa diakses oleh admin'));
+    }
+
+    req.user = {
+      userId: user._id.toString(),
+      role: user.role,
+    };
+    next();
+  } catch (error) {
+    next(new AuthenticationError('Missing authentication'));
   }
-
-  next();
 };

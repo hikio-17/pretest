@@ -1,9 +1,10 @@
 class NewTicket {
   constructor(payload) {
     this._verifyPayload(payload);
-    const { title, description } = payload;
+    const { title, description, priority } = payload;
     this.title = title;
     this.description = description;
+    this.priority = priority || 'low';
   }
 
   _verifyPayload(payload) {

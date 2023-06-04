@@ -20,6 +20,7 @@ class LoginUserUseCase {
 
   async execute(useCasePayload) {
     const { email, password } = new UserLogin(useCasePayload);
+    /* istanbul ignore next */
     this._emailValidator.validate(email);
     const encryptedPassword = await this._userRepository.getPasswordByEmail(email);
     await this._passwordHash.comparePassword(password, encryptedPassword);

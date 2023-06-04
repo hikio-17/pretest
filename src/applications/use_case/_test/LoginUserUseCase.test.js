@@ -5,6 +5,7 @@ const NewAuth = require('../../../Domains/authentications/entities/NewAuth');
 const AuthenticationRepository = require('../../../domains/authentications/AuthenticationRepository');
 
 const UserRepository = require('../../../domains/user/UserRepository');
+const EmailValidator = require('../../../domains/user/validators/EmailValidator');
 const AuthenticationTokenManager = require('../../security/AuthenticationTokenManager');
 const PasswordHash = require('../../security/PasswordHash');
 const LoginUserUseCase = require('../LoginUserUseCase');
@@ -26,6 +27,7 @@ describe('GetAuthenticationUseCase', () => {
     const mockAuthenticationTokenManager = new AuthenticationTokenManager();
     const mockPasswordHash = new PasswordHash();
     const mockAuthenticationRepository = new AuthenticationRepository();
+    const mockEmailValidator = new EmailValidator();
 
     // Mocking
     mockUserRepository.getPasswordByEmail = jest.fn().mockImplementation(() => Promise.resolve('encrypted_password'));
@@ -41,6 +43,7 @@ describe('GetAuthenticationUseCase', () => {
       authenticationRepository: mockAuthenticationRepository,
       passwordHash: mockPasswordHash,
       authenticationTokenManager: mockAuthenticationTokenManager,
+      emailValidator: mockEmailValidator,
     });
 
     // Action

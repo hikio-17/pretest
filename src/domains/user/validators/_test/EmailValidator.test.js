@@ -1,29 +1,38 @@
 const EmailValidator = require('../EmailValidator');
 
 describe('EmailValidator', () => {
+  let emailValidator;
+
+  beforeEach(() => {
+    emailValidator = new EmailValidator();
+  });
+
   describe('validate', () => {
-    it('should return true for a valid email', () => {
-      // Arrange
-      const email = 'test@example.com';
-      const emailValidator = new EmailValidator();
+    it('should throw an error if the email is not valid', () => {
+      const invalidEmails = [
+        'invalidemail', // Missing @ and domain
+        'invalid.email.com', // Missing @
+        'invalid@', // Missing domain
+        'invalid@domain', // Missing top-level domain
+        'invalid@domain.', // Missing top-level domain
+      ];
 
-      // Action
-      const isValid = emailValidator.validate(email);
-
-      // Assert
-      expect(isValid).toBe(true);
+      invalidEmails.forEach((email) => {
+        expect(() => emailValidator.validate(email)).toThrow('EMAIL_NOT_VALID');
+      });
     });
 
-    it('should return false for an invalid email', () => {
-      // Arrange
-      const email = 'invalid_email';
-      const emailValidator = new EmailValidator();
+    it('should not throw an error if the email is valid', () => {
+      const validEmails = [
+        'validemail@example.com',
+        'another.valid.email@example.co.uk',
+        'valid-email@example-domain.com',
+        'valid_email@example.com',
+      ];
 
-      // Action
-      const isValid = emailValidator.validate(email);
-
-      // Assert
-      expect(isValid).toBe(false);
+      validEmails.forEach((email) => {
+        expect(() => emailValidator.validate(email)).not.toThrow('EMAIL_NOT_VALID');
+      });
     });
   });
 });

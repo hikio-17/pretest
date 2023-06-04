@@ -12,7 +12,6 @@
 - Pengguna dapat melacak status permintaan mereka dan mendapatkan pembaruan dari tim teknis melalui aplikasi.
 - Prioritas tiket diterapkan untuk memberikan perhatian lebih cepat kepada permintaan mendesak atau masalah kritis dengan prioritas ['Critical', 'High', 'Medium', 'Low'].
 - Terdapat feature search dan pagination yang memudahkan teknisi untuk menangani tiket yang masuk sesuai dengan kriteria tertentu
-- Terdapat 
 
 
 ## Pencatatan Log
@@ -22,7 +21,7 @@ Sistem Tiket dilengkapi dengan sistem pencatatan log yang membantu memantau akti
 
 ## Pustaka Log
 
-Pencatatan log diimplementasikan menggunakan pustaka log yang populer, seperti Winston atau Bunyan. Pustaka log ini memungkinkan kita untuk mengatur tingkat kepentingan log, format log, serta menyimpan log ke berbagai target, seperti konsol atau file.
+Pencatatan log diimplementasikan menggunakan pustaka log seperti Winston. Pustaka log ini memungkinkan kita untuk mengatur tingkat kepentingan log, format log, serta menyimpan log ke berbagai target, seperti konsol atau file.
 
 
 ## Tingkat Kepentingan Log
@@ -73,7 +72,7 @@ Untuk menjaga kapasitas penyimpanan yang optimal, sistem mempertahankan log hany
   npm install
 ```
 4. Konfigurasi
-- Salin file .env.example ke .env dan atur konfigurasi yang diperlukan, seperti koneksi database dan kunci rahasia JWT.
+- Salin file .env.example ke .env dan atur konfigurasi yang diperlukan, seperti koneksi database dan SECRET KEY JWT.
 
 5. Jalankan aplikasi:
 
@@ -81,7 +80,7 @@ Untuk menjaga kapasitas penyimpanan yang optimal, sistem mempertahankan log hany
   npm run start
 ```
 
-Secara default aplikasi akan dijalankan di `http://localhost:500`
+Secara default aplikasi akan dijalankan di `http://localhost:5000`
 ## Authors
 
 - [@hikio-17](https://hikio-17.github.io/)

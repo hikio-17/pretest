@@ -9,15 +9,18 @@ class LoginUserUseCase {
     authenticationRepository,
     passwordHash,
     authenticationTokenManager,
+    emailValidator,
   }) {
     this._userRepository = userRepository;
     this._authenticationRepository = authenticationRepository;
     this._authenticationTokenManager = authenticationTokenManager;
     this._passwordHash = passwordHash;
+    this._emailValidator = emailValidator;
   }
 
   async execute(useCasePayload) {
     const { email, password } = new UserLogin(useCasePayload);
+    this._emailValidator.validate(email);
     const encryptedPassword = await this._userRepository.getPasswordByEmail(email);
     await this._passwordHash.comparePassword(password, encryptedPassword);
     const id = await this._userRepository.getIdByEmail(email);

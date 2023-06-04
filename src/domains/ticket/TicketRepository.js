@@ -26,6 +26,10 @@ class TicketRepository {
   async deleteTicketById(ticketId) {
     throw new Error('TICKET_REPOSITORY.METHOD_NOT_IMPLEMENTED');
   }
+
+  async getUserIdByTicketId(ticketId) {
+    throw new Error('TICKET_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+  }
 }
 
 module.exports = TicketRepository;

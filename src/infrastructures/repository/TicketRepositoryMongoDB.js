@@ -1,5 +1,6 @@
 /* eslint-disable radix */
-const { converDate } = require('../../commons/date/convertDate');
+const { Lifetime } = require('awilix');
+const { converDate, convertDate } = require('../../commons/date/convertDate');
 const AuthorizationError = require('../../commons/exceptions/AuthorizationError');
 const NotFoundError = require('../../commons/exceptions/NotFoundError');
 const TicketRepository = require('../../domains/ticket/TicketRepository');
@@ -35,15 +36,16 @@ class TicketRepsositoryMongoDB extends TicketRepository {
     const ticket = await Ticket.findOne({ _id: ticketId }).populate('createdBy', '_id username email');
     return {
       ...ticket._doc,
-      createdAt: converDate(ticket.createdAt),
-      updatedAt: converDate(ticket.updatedAt),
+      createdAt: convertDate(ticket.createdAt),
+      updatedAt: convertDate(ticket.updatedAt),
     };
   }
 
   async verifyAccessTicket(ticketId, user) {
     const ticket = await Ticket.findOne({ _id: ticketId });
-
-    if (ticket.createdBy.toString() !== user.userId || user.role !== 'admin') {
+    console.log(user.userId);
+    console.log(ticket.createdBy.toString());
+    if (ticket.createdBy.toString() !== user.userId && user.role !== 'admin') {
       throw new AuthorizationError('Anda tidak dapat mengakses resource ini');
     }
 
@@ -65,15 +67,12 @@ class TicketRepsositoryMongoDB extends TicketRepository {
       ],
     } : {};
 
-    // menghitung total data tiket
-    const totalTicketCount = await Ticket.countDocuments(searchQuery).exec();
-
     // mengatur paginasi
     const currentPage = parseInt(page) || 1;
-    const perPage = parseInt(limit) || 2;
+    const perPage = parseInt(limit) || 4;
     const skip = (currentPage - 1) * perPage;
 
-    const tickets = await Ticket.find()
+    let tickets = await Ticket.find()
       .select('-priorityIndex')
       .sort({ priorityIndex: 1 }).populate('createdBy', '_id username')
       .skip(skip)
@@ -81,10 +80,19 @@ class TicketRepsositoryMongoDB extends TicketRepository {
       .exec();
 
     if (role === 'user') {
-      return tickets.map((ticket) => ticket.createdBy.toString() === userId);
+      tickets = await Ticket.find({ createdBy: userId })
+        .select('-priorityIndex')
+        .sort({ timestamp: -1 }).populate('createdBy', '_id username email')
+        .skip(skip)
+        .limit(perPage)
+        .exec();
     }
-
     return tickets;
+  }
+
+  async getUserIdByTicketId(ticketId) {
+    const ticket = await Ticket.findOne({ _id: ticketId });
+    return ticket.createdBy.toString();
   }
 
   async deleteTicketById(ticketId) {

@@ -23,15 +23,12 @@ class UserRepositoryMongoDB extends UserRepository {
     const user = await User.findOne({ email });
 
     if (user) {
-      throw new InvariantError('Email already exist');
+      throw new InvariantError('Email sudah digunakan.');
     }
   }
 
   async getPasswordByEmail(email) {
     const user = await User.findOne({ email });
-    if (!user) {
-      throw new InvariantError('Email tidak valid!');
-    }
     return user.password;
   }
 

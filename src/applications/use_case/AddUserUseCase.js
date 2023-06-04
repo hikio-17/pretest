@@ -11,9 +11,7 @@ class AddUserUseCase {
     const userRegister = new UserRegister(useCasePayload);
 
     /* istanbul ignore next */
-    if (!this._emailValidator.validate(userRegister.email)) {
-      throw new Error('Invalid email!');
-    }
+    this._emailValidator.validate(userRegister.email);
 
     await this._userRepository.verifyAvailableEmail(userRegister.email);
     userRegister.password = await this._passwordHash.hash(userRegister.password);

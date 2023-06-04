@@ -3,14 +3,14 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const connectDB = require('./infrastructures/database/db');
-const DomainErrorTranslator = require('./commons/exceptions/DomainErrorTranslator');
-const ClientError = require('./commons/exceptions/ClientError');
 
 const userRoutes = require('./interfaces/routes/userRouter');
 const authenticationRoutes = require('./interfaces/routes/authenticationRouter');
 const ticketRoutes = require('./interfaces/routes/ticketRouter');
+const notificationRoutes = require('./interfaces/routes/notificationRouter');
 const logger = require('./commons/middlewares/logs/logger');
+const errorHandler = require('./commons/middlewares/error/errorHandler');
+const connectDB = require('./infrastructures/database/db');
 
 const app = express();
 require('dotenv').config();
@@ -23,22 +23,10 @@ app.use(bodyParser.json());
 app.use('/api', userRoutes);
 app.use('/api', authenticationRoutes);
 app.use('/api', ticketRoutes);
+app.use('/api', notificationRoutes);
 
-app.use((err, req, res, next) => {
-  const translatedError = DomainErrorTranslator.translate(err);
-  if (err instanceof ClientError || translatedError.constructor.name === 'InvariantError') {
-    res.status(translatedError.statusCode).json({
-      status: 'fail',
-      message: translatedError.message,
-    });
-    return;
-  }
-  res.status(500).json({
-    status: 'error',
-    message: 'Internal server error',
-  });
-  next();
-});
+/** ROUTE HANDLING ERROR */
+app.use(errorHandler);
 
 /** CONNECT TO MONGODB */
 connectDB();

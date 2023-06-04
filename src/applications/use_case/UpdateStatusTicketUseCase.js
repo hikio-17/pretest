@@ -1,8 +1,9 @@
 const UpdateStatusTicket = require('../../domains/ticket/entities/UpdateStatusTicket');
 
 class UpdateStatusTicketUseCase {
-  constructor({ ticketRepository }) {
+  constructor({ ticketRepository, notificationRepository }) {
     this._ticketRepository = ticketRepository;
+    this._notificationRepository = notificationRepository;
   }
 
   async execute(useCasePayload, ticketId) {
@@ -10,8 +11,10 @@ class UpdateStatusTicketUseCase {
     const { status } = new UpdateStatusTicket(useCasePayload);
     /* istanbul ignore next */
     await this._ticketRepository.verifyAvailableTicket(ticketId);
+    const userId = await this._ticketRepository.getUserIdByTicketId(ticketId);
     /* istanbul ignore next */
-    return this._ticketRepository.updateStatusTicket(status, ticketId);
+    await this._ticketRepository.updateStatusTicket(status, ticketId);
+    await this._notificationRepository.sendNotification({ userId, status, ticketId });
   }
 
   _verifyTicketId(ticketId) {
